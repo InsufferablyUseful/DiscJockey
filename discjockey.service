@@ -1,0 +1,11 @@
+[Unit]
+Description=Monitor for disc insertion events and run the discjockey autorun script when they occur
+After=graphical-session.target
+Requires=graphical-session.target
+[Service]
+Type=simple
+ExecStart=python %h/.local/bin/discjockeyd.py
+[Install]
+WantedBy=graphical-session.target
+
+

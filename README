@@ -1,0 +1,18 @@
+FAQ
+
+Online? Offline?
+
+How to create a bootable .iso
+
+1. Copy the folder named after the type of install you want to a new location e.g SingleDiscInstaller to BaldursGateSingleDiskInstaller. This will become your .iso
+2. Copy the offline installer to your new folder
+3. Open launch.sh in a text editor. Set the MANDATORY variables to appropriate values.
+4. If your game has fixes authored by valve or the umu team, set the OPTIONAL variables as well. This tells umu to apply the fixes. You can also choose a custom proton version here if you want. 
+5. Create an .iso from the folder 
+6. Mount the .iso and test it. If you've installed the udev scripts it should behave exactly like a real disc. Check that 
+	- the installer autostarts
+	- the install finishes successfully
+	- the game starts from the autostart script 
+	- the game starts upon disk insertion(remount the .iso). 
+7. Once you have a working .iso, burn it to a disk!
+8. Optionally, create a fancy case and print a custom label for the disk(Who am I kidding? If you think that this whole thing is a good idea it's not optional for you). 
