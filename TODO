@@ -1,6 +1,9 @@
+Proper Documentation
 Offline installs with a stored version of proton if the user wants.
 Multidisk install
 Full setup - check for scripts and daemon and install them if they aren't present
+DiskJockey Uninstall
+Game Uninstall
 Global config to override on disc defaults
 Move configuration out of the script itself
 Support native linux installers and programs
