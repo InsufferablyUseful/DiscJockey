@@ -1,0 +1,7 @@
+Release 0.1
+
+Markdown Readme with full install instructions, disk creation instructions, and troubleshooting
+Global configuration for install location and autostart installed games
+Install script with dependency checking, file copying, systemD and global config creation
+Gracefully handle discs that aren't discjockey discs
+
