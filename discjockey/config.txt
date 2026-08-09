@@ -1,8 +1,8 @@
 #Overrides the install directory on the disc. Useful if you keep games in different places across different machines, or you ever want to change your default install location without re-burning all your discs 
-GlobalInstallDirectory=/run/media/evelyn/LinuxGamingPrimary/Games/Lutris/gog
+globalInstallDirectory=/mnt/gamelibrary/gog
 #Set if installed programs will automatically start when you insert their disc. If disabled nothing will happen when you insert a disc containing a program that is already installed
-AutostartInstalledPrograms=true
+autostartInstalledPrograms=true
 #Choose whether or not installers will create desktop shortcuts. Bonus points if your desktop background is completely illegible. Existing shortcuts will not be affected by changes to this value
-InstallerCreatesDesktopIcons=true
+installerCreatesDesktopIcons=true
 #Choose whether or not installers will create application menu/launcher entries. Bonus points if the games menu extends off the screen. Existing entries will not be affected by changes to this value 
-InstallerCreatesMenuEntries=true
+installerCreatesMenuEntries=true

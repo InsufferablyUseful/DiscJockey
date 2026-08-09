@@ -28,6 +28,7 @@ while read -r line; do
   configuration["$key"]="$value"
 done < "config.txt"
 #Fill out the config values into named variables for access
+#TODO impractical in the long run. Break the whole thing up into functions/new scripts which setup just the vars they need
 autostartPath=${configuration["autostartPath"]}
 autostartScript=${configuration["autostartScript"]}
 gameDirectory=${configuration["gameDirectory"]}
@@ -39,15 +40,43 @@ gameID=${configuration["gameID"]}
 store=${configuration["store"]}
 proton=${configuration["proton"]}
 
-#Check if game is already installed
-autostartFullPath=${autostartPath}/${autostartScript}
+#Grab the global config file
+#TODO This should be a function that I call twice, but passing arrays into functions is hard. Figure something out.
+declare -A globalconfiguration
+while read -r line; do
+  if [[ $line == \#* ]]; then 
+    continue 
+  fi
+  key="$(echo "$line" | awk -F'=' '{print $1}')"
+  value=$(echo "$line" | awk -F'=' '{print $2}')
+  globalconfiguration["$key"]="$value"
+done < "${HOME}/.config/discjockey/config.txt"
 
-if [[ -e "${autostartFullPath}" ]]; then
-	#Run the launch script 
-	${autostartFullPath} 
+globalInstallDirectory=${globalconfiguration["globalInstallDirectory"]}
+echo "$globalInstallDirectory"
+autostartInstalledPrograms=${globalconfiguration["autostartInstalledPrograms"]}
+echo "$autostartInstalledPrograms"
+installerCreatesDesktopIcons=${globalconfiguration["installerCreatesDesktopIcons"]}
+installerCreatesMenuEntries=${globalconfiguration["installerCreatesMenuEntries"]}
+
+if [[ ! -z "$globalInstallDirectory" ]]; then
+	gamePath="$globalInstallDirectory"
+fi
+
+#Check if game is already installed
+autostartFullPath="${autostartPath}/${autostartScript}"
+
+if [[ -e "$autostartFullPath" ]]; then
+	
+	if [[ "$autostartInstalledPrograms" = "true" ]]; then
+		#Run the launch script 
+		$autostartFullPath &
+	fi
+
 else
 	#Run the installer
 	prefixDirectoryFullPath=${gamePath}/${gameDirectory}
+
  	#Check the path to the install folder exists
 	if [[ ! -d "$(dirname "$prefixDirectoryFullPath")" ]]; then
 		printf "$parentdir doesn't exist. Exiting...\n"
