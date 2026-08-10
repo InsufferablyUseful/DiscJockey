@@ -17,6 +17,14 @@
 #!/bin/bash
 discDirectory="$1"
 cd "$discDirectory"
+
+#Check we're dealing with a discjockey disc
+if [[ ! -f "config.txt" ]]; then
+	echo "Not a discjockey disk. exiting..."
+	exit 0
+fi
+
+
 #Grab the config file
 declare -A configuration
 while read -r line; do
