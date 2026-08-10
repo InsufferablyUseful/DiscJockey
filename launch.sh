@@ -79,7 +79,6 @@ if [[ -e "$autostartFullPath" ]]; then
 else
 	#Run the installer
 	prefixDirectoryFullPath=${gamePath}/${gameDirectory}
-	echo "$prefixDirectoryFullPath"
  	#Check the path to the install folder exists
 	if [[ ! -d "$(dirname "$prefixDirectoryFullPath")" ]]; then
 		printf "$parentdir doesn't exist. Exiting...\n"
