@@ -53,14 +53,17 @@ while read -r line; do
 done < "${HOME}/.config/discjockey/config.txt"
 
 globalInstallDirectory=${globalconfiguration["globalInstallDirectory"]}
-echo "$globalInstallDirectory"
+globalAutostartDirectory=${globalconfiguration["globalAutostartDirectory"]}
 autostartInstalledPrograms=${globalconfiguration["autostartInstalledPrograms"]}
-echo "$autostartInstalledPrograms"
 installerCreatesDesktopIcons=${globalconfiguration["installerCreatesDesktopIcons"]}
 installerCreatesMenuEntries=${globalconfiguration["installerCreatesMenuEntries"]}
 
 if [[ ! -z "$globalInstallDirectory" ]]; then
 	gamePath="$globalInstallDirectory"
+fi
+
+if [[ ! -z "$globalAutostartDirectory" ]]; then
+	autostartPath="$globalAutostartDirectory"
 fi
 
 #Check if game is already installed
@@ -76,7 +79,7 @@ if [[ -e "$autostartFullPath" ]]; then
 else
 	#Run the installer
 	prefixDirectoryFullPath=${gamePath}/${gameDirectory}
-
+	echo "$prefixDirectoryFullPath"
  	#Check the path to the install folder exists
 	if [[ ! -d "$(dirname "$prefixDirectoryFullPath")" ]]; then
 		printf "$parentdir doesn't exist. Exiting...\n"

@@ -1,5 +1,7 @@
 #Overrides the install directory on the disc. Useful if you keep games in different places across different machines, or you ever want to change your default install location without re-burning all your discs 
-globalInstallDirectory=/mnt/gamelibrary/gog
+globalInstallDirectory=/mnt/games/gog
+#Overrides the launch shortcut location on the disc. Note that if you change this you should copy the contents of the old folder to the new location, otherwise your existing games will not be detected as installed
+globalAutostartDirectory=/home/discjockey/.discjockey
 #Set if installed programs will automatically start when you insert their disc. If disabled nothing will happen when you insert a disc containing a program that is already installed
 autostartInstalledPrograms=true
 #Choose whether or not installers will create desktop shortcuts. Bonus points if your desktop background is completely illegible. Existing shortcuts will not be affected by changes to this value
