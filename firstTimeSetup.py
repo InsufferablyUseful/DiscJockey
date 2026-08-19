@@ -19,7 +19,9 @@
 import subprocess
 import operator
 import os
-
+import shutil
+import sys
+from time import localtime, strftime
 #Setup global vars
 home_directory = os.path.expanduser("~")
 expected_files = [
@@ -68,6 +70,34 @@ def Get_Input(message, valid_inputs):
                         print('Invalid response. Please try again')
         return user_input
 
+def Install_DiscJockey():
+        print('Install started!')
+        #backup config file
+        print('Creating config file')
+        config_path = os.path.join(home_directory,'.config/discjockey/config')
+        if os.path.isfile(config_path):
+                time = strftime('%H_%M_%S',localtime())
+                if not os.path.isfile(config_path + '_backup_' + time):
+                        shutil.copyfile(config_path,config_path + '_backup_' + time)
+                else:
+                        print('Backup config file name already taken. Could not create backup config')
+                        sys.exit(1)
+        #create directories
+        print('Creating directories')
+        for destination in expected_files:
+                directory = os.path.join(home_directory, os.path.dirname(destination))
+                print(directory)
+                os.makedirs(directory, exist_ok = True)
+        #create files
+        print('Creating files')
+        for destination in expected_files:
+                fileName = os.path.basename(destination)
+                shutil.copyfile(os.path.join('discjockeyFiles',fileName),os.path.join(home_directory,destination))
+        #Setup daemon
+        subprocess.run('systemctl --user enable discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
+        subprocess.run('systemctl --user start discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
+
+
 print('Checking dependencies...')
 dependencies_met = True
 if not CheckDependency('Bash version >= 4:', 'echo $BASH_VERSINFO', operator.gt, 4,True):
@@ -105,4 +135,8 @@ if len(missing_files) == 0:
         elif installed_version == ondisc_version:
                   print('This version is already installed. Nothing to do!')
                   sys.exit(0)
-
+if install_permission == 'N' or install_permission == 'n':
+        print('Exiting installer')
+        sys.exit(0)
+if install_permission == 'Y' or install_permission == 'y':
+        Install_DiscJockey()
