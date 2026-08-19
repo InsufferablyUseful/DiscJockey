@@ -18,6 +18,18 @@
 #
 import subprocess
 import operator
+import os
+
+#Setup global vars
+home_directory = os.path.expanduser("~")
+expected_files = [
+'.config/discjockey/version',
+'.config/discjockey/config',
+'.local/bin/discjockey/launch.sh',
+'.local/bin/discjockey/autorun.sh',
+'.local/bin/discjockey/discjockeyd.py',
+'.config/systemd/user/discjockey.service' ]
+valid_inputs_Yes_No = ['Y','N','y','n']
 
 def CheckDependency(message, command, operator, expected_output, numeric):
         print(message, end = ' ')
@@ -32,6 +44,30 @@ def CheckDependency(message, command, operator, expected_output, numeric):
                 print('Not found')
                 return False
 
+def CheckForExistingInstall(file_locations, home_directory):
+        missing_files = []
+        for file_location in file_locations:
+                print(os.path.join(home_directory,file_location))
+                if not os.path.isfile(os.path.join(home_directory,file_location)): 
+                        missing_files.append(file_location)
+        print(len(missing_files))
+        return missing_files 
+
+def Get_Input(message, valid_inputs):
+        valid_input_received = False
+        user_input = ''
+        while valid_input_received == False:
+                user_input = input(message)
+                if len(valid_inputs) == 0:
+                        valid_input_received = True
+                        break
+                for valid_input in valid_inputs:
+                        if user_input == valid_input:
+                                valid_input_received = True
+                if valid_input_received == False:
+                        print('Invalid response. Please try again')
+        return user_input
+
 print('Checking dependencies...')
 dependencies_met = True
 if not CheckDependency('Bash version >= 4:', 'echo $BASH_VERSINFO', operator.gt, 4,True):
@@ -44,5 +80,29 @@ if not CheckDependency('Umu-launcher:','umu-run -v', operator.ne, '', False):
 if not dependencies_met:
         print('Your system is missing dependencies that DiscJockey needs to run properly. DiscJockey cannot be installed. See the documentation for troubleshooting steps.')
         print('The installer will now exit...')
-
+        sys.exit(1)
 print('Checking for an existing DiscJockey installation...')
+
+missing_files = CheckForExistingInstall(expected_files, home_directory)
+
+install_permission = ''
+if len(missing_files) == len(expected_files):
+        install_permission = Get_Input('No install of DiscJockey found. Do you want to install Y/N: ', valid_inputs_Yes_No)
+if len(missing_files) > 0 and len(missing_files) < len(expected_files):
+        print('Traces of an existing install were found, but it seems to be incomplete.')
+        print('The following files are missing: ')
+        for missing_file in missing_files:
+                print(missing_file)
+        install_permission = Get_Input('Do you want to reinstall DiscJockey? Your global configuration file will be preserved. Y/N: ', valid_inputs_Yes_No)
+if len(missing_files) == 0: 
+        print('Existing DiscJockey installation found. Checking if the version on disc is more recent.')
+        with open(os.path.join(home_directory, '.config/discjockey/version'), 'r') as version_file:
+                installed_version = version_file.readline()
+        if installed_version < ondisc_version:
+                  install_permission = Get_Input('This version is newer than the installed version. Do you want to upgrade? Y/N: ', valid_inputs_Yes_No)
+        elif installed_version > ondisc_version:
+                  install_permission = Get_Input('This version is older than the installed version. Do you want to downgrade? Y/N: ', valid_inputs_Yes_No)
+        elif installed_version == ondisc_version:
+                  print('This version is already installed. Nothing to do!')
+                  sys.exit(0)
+
