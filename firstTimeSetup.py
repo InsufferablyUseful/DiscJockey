@@ -22,16 +22,11 @@ import os
 import shutil
 import sys
 from time import localtime, strftime
-#Setup global vars
-home_directory = os.path.expanduser("~")
-expected_files = [
-'.config/discjockey/version',
-'.config/discjockey/config',
-'.local/bin/discjockey/launch.sh',
-'.local/bin/discjockey/autorun.sh',
-'.local/bin/discjockey/discjockeyd.py',
-'.config/systemd/user/discjockey.service' ]
-valid_inputs_Yes_No = ['Y','N','y','n']
+
+from utilities import *
+
+with open('discjockeyFiles/version', 'r') as version_file:
+        ondisc_version = version_file.readline()
 
 def CheckDependency(message, command, operator, expected_output, numeric):
         print(message, end = ' ')
@@ -55,45 +50,37 @@ def CheckForExistingInstall(file_locations, home_directory):
         print(len(missing_files))
         return missing_files 
 
-def Get_Input(message, valid_inputs):
-        valid_input_received = False
-        user_input = ''
-        while valid_input_received == False:
-                user_input = input(message)
-                if len(valid_inputs) == 0:
-                        valid_input_received = True
-                        break
-                for valid_input in valid_inputs:
-                        if user_input == valid_input:
-                                valid_input_received = True
-                if valid_input_received == False:
-                        print('Invalid response. Please try again')
-        return user_input
-
 def Install_DiscJockey():
         print('Install started!')
         #backup config file
-        print('Creating config file')
-        config_path = os.path.join(home_directory,'.config/discjockey/config')
-        if os.path.isfile(config_path):
-                time = strftime('%H_%M_%S',localtime())
-                if not os.path.isfile(config_path + '_backup_' + time):
-                        shutil.copyfile(config_path,config_path + '_backup_' + time)
-                else:
-                        print('Backup config file name already taken. Could not create backup config')
-                        sys.exit(1)
         #create directories
         print('Creating directories')
         for destination in expected_files:
                 directory = os.path.join(home_directory, os.path.dirname(destination))
                 print(directory)
                 os.makedirs(directory, exist_ok = True)
+
+        print('Creating config file')
+        config_path = os.path.join(home_directory,'.config/discjockey/config')
+        if os.path.isfile(config_path):
+                keep_config = Get_Input('New config file found. Do you want to replace the existing config file? This will wipe any changes to the defaults. In most cases it\'s easier to copy new values from the example config in discjockeyFiles/config. Y/N: ', valid_inputs_Yes_No)
+                if keep_config == 'Y' or keep_config == 'n':
+                        print('Keeping existing config file. You should review the example config at discjockeyFiles/config for any new options you may want to change.')
+                if keep_config == 'N' or keep_config == 'n': 
+                        print('Replacing config file. The old config file will be preserved in the config directory. You will need to update the default settings.')
+                        time = strftime('%H_%M_%S',localtime())
+                        if not os.path.isfile(config_path + '_backup_' + time):
+                                shutil.copyfile(config_path,config_path + '_backup_' + time)
+                        else:
+                                print('Backup config file name already taken. Could not create backup config')
+                                sys.exit(1)
         #create files
         print('Creating files')
         for destination in expected_files:
                 fileName = os.path.basename(destination)
                 shutil.copyfile(os.path.join('discjockeyFiles',fileName),os.path.join(home_directory,destination))
         #Setup daemon
+        subprocess.run('systemctl --user daemon-reload', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user enable discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user start discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
 
@@ -133,8 +120,7 @@ if len(missing_files) == 0:
         elif installed_version > ondisc_version:
                   install_permission = Get_Input('This version is older than the installed version. Do you want to downgrade? Y/N: ', valid_inputs_Yes_No)
         elif installed_version == ondisc_version:
-                  print('This version is already installed. Nothing to do!')
-                  sys.exit(0)
+                  install_permission = Get_Input('This version is already installed. Do you want to reinstall? Y/N: ', valid_inputs_Yes_No)
 if install_permission == 'N' or install_permission == 'n':
         print('Exiting installer')
         sys.exit(0)
