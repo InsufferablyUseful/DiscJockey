@@ -6,7 +6,7 @@
 #    the Free Software Foundation, either version 3 of the License, or
 #    any later version.
 
-#   This program is distributed in the hope that it will be useful,
+#    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -14,14 +14,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-[Unit]
-Description=Monitor for disc insertion events and run the discjockey autorun script when they occur
-After=graphical-session.target
-Requires=graphical-session.target
-[Service]
-Type=simple
-ExecStart=python %h/.local/bin/discjockeyd.py
-[Install]
-WantedBy=graphical-session.target
-
-
+import pyudev
+import subprocess, sys
+context = pyudev.Context()
+monitor = pyudev.Monitor.from_netlink(context)
+#monitor.filter_by('block')
+print('Monitoring!')
+for device in iter(monitor.poll, None):
+    if device.get('ID_CDROM') and device.get('DISK_MEDIA_CHANGE') and device.get('ID_FS_TYPE'):
+        print('CDROM inserted!')
+        print(device.get('DEVNAME'))
+        subprocess.run(f'autorun.sh {device.get('DEVNAME')}', shell = True, executable="/bin/bash")
