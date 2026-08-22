@@ -20,7 +20,7 @@ After=graphical-session.target
 Requires=graphical-session.target
 [Service]
 Type=simple
-ExecStart=python %h/.local/bin/discjockeyd.py
+ExecStart=python %h/.local/bin/discjockey/discjockeyd.py
 [Install]
 WantedBy=graphical-session.target
 
