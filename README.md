@@ -39,7 +39,7 @@ DiscJockey aims to run on a wide variety of linux distros. As part of the goal o
 ### Simple
 The process of creating DiscJockey discs should be simple and require no specialist skills beyond the ability to edit text. For some tricky games, and programs, basic knowledge of wine and installing windows dependencies will also be required. 
 
-## Backwards Compatible
+### Backwards Compatible
 Once a disc is burned, you want to keep it forever. Disjockey should work with any DiscJockey disc, even if it's years out of date. New features must preserve old behaviour for older discs. 
 ## Non Goals
 
