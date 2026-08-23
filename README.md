@@ -29,15 +29,58 @@ DiscJockey is a project aimed at bringing an authentic autorun experience to lin
 ### Create a DiscJockey disc
 
 1. Clone this repo or download the latest release
-2. Copy the folder SingleDiscInstaller to a location of your choice. This copy is the working directory which will become your ISO. Copying the folder preserves a clean master copy for making more discs.
-3. For a self contained DiscJockey installation, copy DiscJockeyFiles, firstTimeSetup.py and uninstallDiscjockey.py to your copy of the working directory. This is optional, but your disc will not be able to install/uninstall DiscJockey unless you do this.
-4. Copy your installer and any data files into your working directory.
-5. Copy extras like manuals, artbooks, strategy guides etc to a folder called Extras in your working directory
-6. Copy a disc icon to your working directory. The XDG specification requires a .png image. .ICO files from windows will NOT work. Convert them to png with an image editor first. The easiest way to get icons from a GOG installer is to install the game and grab them from the game directory, ufortunately. 
-7. Open config with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. 
-8. run the makeiso.sh script. This uses mkisofs with some flags for maximum compatibility.mkisofs isn't installed by default on every distro, so you might have to install it, or find an alternative. 
-9. Test the iso. See Testing Disks for info
-10. Burn the iso to a disk with whatever tool you want. Brasero is a solid choice.
+
+`git clone https://github.com/InsufferablyUseful/DiscJockey.git`
+
+#### Prepare the working directory
+1. Copy the folder SingleDiscInstaller to a location of your choice. This copy is the working directory which will become your ISO. Naming it after the program you're going to burn is a good idea. For this example I'll use MDK  
+
+`cp SingleDiscInstaller MDK `
+
+2. For a self contained DiscJockey installation, copy DiscJockeyFiles, firstTimeSetup.py, utilities.py and uninstallDiscjockey.py to your copy of the working directory. This is optional, but your disc will not be able to install/uninstall DiscJockey unless you do this.
+
+`cp DiscJockeyFiles firstTimeSetup.py utilities.py uninstallDiscjockey.py MDK/`
+
+3. Copy your installer and any data files into your working directory.
+
+`cp ~/Downloads/setupMDK.exe MDK.bin MDK/`
+
+3. Optionally, copy an icon image to the working directory. This will be used for desktop /launcher icons. For GOG games the best way to get icons is to install the game and grab them from the game directory, unfortunately. For physical disks the icons are usually in the root directory on the disk. 
+
+`cp ~/Pictures/MDK.png MDK/`
+
+Note! 
+The XDG specification requires a .png image. .ICO files from windows will NOT work. Convert them to png with an image editor first.  
+
+#### Configure DiscJockey 
+
+1. Enter your working directory. Open the discjockey file inside SingleDiscInstaller with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The file contains example values and comments to guide you. 
+
+`cd MDK/&& nano discjockey`
+
+2. Test the config file by running launch.sh(located in DiscJockeyFiles in your Installation folder) and passing your working directory as an argument 
+
+./DiscJockeyFiles/launch.sh ../MDK
+
+If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
+
+Note! If you have a global config file at ~/.config/discjockey/config and autostartInstalledPrograms is set to False then installed games will not autostart
+
+
+#### Create a physical disk
+1. Make a .iso file from your working directory. Discjockey includes makeiso.sh, a one line wrapper around mkisofs that sets flags for maximum compatibility. mkisofs isn't installed by default on every distro, so you might have to install it, or find an alternative. 
+
+Searching for mkisofs "distro name" is usually informative...
+
+`makeiso.sh MDK/ MDK`
+
+The second argument is the label to assign to the .iso
+
+You can also use GUI programs like ...
+
+2. Test the iso. Assuming you have installed the DiscJockey service, mounting the iso should autorun the installer.   
+
+3. Burn the iso to a disk with whatever tool you want. Brasero is a solid choice.
 
 Congratulations! You have a working DiscJockey disc.  
 
