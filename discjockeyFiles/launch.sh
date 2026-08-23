@@ -25,6 +25,7 @@ if [[ ! -f "config.txt" ]]; then
 fi
 
 
+
 #Grab the config file
 declare -A configuration
 while read -r line; do
@@ -44,21 +45,31 @@ gamePath=${configuration["gamePath"]}
 gameExe=${configuration["gameExe"]}
 installerExe=${configuration["installerExe"]}
 
+#DO NOT LIKE Really want to avoid doing this. In future grab $HOME and replace it with the actual home instead of evalling arbitrary user input. Priority for 0.2
+autostartPath=$(eval "echo $autostartPath")
+gamePath=$(eval "echo $gamePath")
+echo $autostartPath
+echo $gamePath
+exit 0
+
 gameID=${configuration["gameID"]}
 store=${configuration["store"]}
 proton=${configuration["proton"]}
 
 #Grab the global config file
 #TODO This should be a function that I call twice, but passing arrays into functions is hard. Figure something out.
+
 declare -A globalconfiguration
-while read -r line; do
-  if [[ $line == \#* ]]; then 
-    continue 
-  fi
-  key="$(echo "$line" | awk -F'=' '{print $1}')"
-  value=$(echo "$line" | awk -F'=' '{print $2}')
-  globalconfiguration["$key"]="$value"
-done < "${HOME}/.config/discjockey/config.txt"
+if [[ -f "${HOME}/.config/discjockey/config"]]; then 
+	while read -r line; do
+  	if [[ $line == \#* ]]; then 
+    	continue 
+  	fi
+  	key="$(echo "$line" | awk -F'=' '{print $1}')"
+  	value=$(echo "$line" | awk -F'=' '{print $2}')
+  	globalconfiguration["$key"]="$value"
+	done < "${HOME}/.config/discjockey/config"
+fi
 
 globalInstallDirectory=${globalconfiguration["globalInstallDirectory"]}
 globalAutostartDirectory=${globalconfiguration["globalAutostartDirectory"]}
