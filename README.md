@@ -24,6 +24,41 @@ DiscJockey is a project aimed at bringing an authentic autorun experience to lin
 - Global configuration to overwrite on disc settings
 - Autostart installed games on disc insert for a console like experience
 
+## How to Use
+
+### Create a DiscJockey disc
+
+1. Clone this repo or download the latest release
+2. Copy the folder SingleDiscInstaller to a location of your choice. This copy is the working directory which will become your ISO. Copying the folder preserves a clean master copy for making more discs.
+3. For a self contained DiscJockey installation, copy DiscJockeyFiles, firstTimeSetup.py and uninstallDiscjockey.py to your copy of the working directory. This is optional, but your disc will not be able to install/uninstall DiscJockey unless you do this.
+4. Copy your installer and any data files into your working directory.
+5. Copy extras like manuals, artbooks, strategy guides etc to a folder called Extras in your working directory
+6. Copy a disc icon to your working directory. The XDG specification requires a .png image. .ICO files from windows will NOT work. Convert them to png with an image editor first. The easiest way to get icons from a GOG installer is to install the game and grab them from the game directory, ufortunately. 
+7. Open config with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. 
+8. run the makeiso.sh script. This uses mkisofs with some flags for maximum compatibility.mkisofs isn't installed by default on every distro, so you might have to install it, or find an alternative. 
+9. Test the iso. See Testing Disks for info
+10. Burn the iso to a disk with whatever tool you want. Brasero is a solid choice.
+
+Congratulations! You have a working DiscJockey disc.  
+
+### Installing DiscJockey
+
+#### From a DiscJockey disc
+
+1. Insert the disc into your disc drive. Open a terminal and navigate to the location of ythe disc.
+2. Run python firstTimeSetup.py
+3. Discjockey will install automatically.
+4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
+
+#### From your computer.
+
+1. Navigate to your copy of the discjockey repo or latest discjockey release
+2. Run python firstTimeSetup.py
+3. Discjockey will install automatically.
+4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
+
+
+
 ## Project Goals
 
 ### Self Contained
