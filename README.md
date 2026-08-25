@@ -56,7 +56,7 @@ The XDG specification requires a .png image. .ICO files from windows will NOT wo
 
 1. Enter your working directory. Open the discjockey file inside SingleDiscInstaller with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The file contains example values and comments to guide you. 
 
-`cd MDK/&& nano discjockey`
+`cd MDK/ && nano discjockey`
 
 2. Test the config file by running launch.sh(located in DiscJockeyFiles in your Installation folder) and passing your working directory as an argument 
 
