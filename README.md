@@ -35,7 +35,7 @@ DiscJockey is a project aimed at bringing an authentic autorun experience to lin
 #### Prepare the working directory
 1. Copy the folder SingleDiscInstaller to a location of your choice. This copy is the working directory which will become your ISO. Naming it after the program you're going to burn is a good idea. For this example I'll use MDK  
 
-`cp SingleDiscInstaller MDK `
+`cp -r SingleDiscInstaller MDK `
 
 2. For a self contained DiscJockey installation, copy DiscJockeyFiles, firstTimeSetup.py, utilities.py and uninstallDiscjockey.py to your copy of the working directory. This is optional, but your disc will not be able to install/uninstall DiscJockey unless you do this.
 
