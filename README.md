@@ -24,6 +24,15 @@ DiscJockey is a project aimed at bringing an authentic autorun experience to lin
 - Global configuration to overwrite on disc settings
 - Autostart installed games on disc insert for a console like experience
 
+
+## Architecture
+
+DiscJockey consists of a python daemon running under systemD, a launch script that handlesinstalling and running games from disc, a centralised location for launch scripts and gamemanagement, and a config folder. 
+
+The daemon is a user daemon and starts on login. It watches for discs to be inserted, then calles the launch script if it finds the discjockey config file on disc. The launch script checks if the game is already installed and launches the game from your PC's storage, or the installer from disc, as appropriate. 
+
+Discjockey uses UMU-launcher to run games, as it provides a standard environment that is consistent with other launchers and can be installed as a user application. A new prefix is created for each game. The location of the prefix is set in the on disc config, but can be overridden by the global config. 
+
 ## How to Use
 
 ### Create a DiscJockey disc
@@ -60,7 +69,7 @@ The XDG specification requires a .png image. .ICO files from windows will NOT wo
 
 2. Test the config file by running launch.sh(located in DiscJockeyFiles in your Installation folder) and passing your working directory as an argument 
 
-./DiscJockeyFiles/launch.sh ../MDK
+`./DiscJockeyFiles/launch.sh ../MDK`
 
 If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
 
@@ -118,11 +127,15 @@ DiscJockey aims to run on a wide variety of linux distros. As part of the goal o
 The process of creating DiscJockey discs should be simple and require no specialist skills beyond the ability to edit text. For some tricky games, and programs, basic knowledge of wine and installing windows dependencies will also be required. 
 
 ### Backwards Compatible
-Once a disc is burned, you want to keep it forever. Disjockey should work with any DiscJockey disc, even if it's years out of date. New features must preserve old behaviour for older discs. 
+Once a disc is burned, you want to keep it forever. Disjockey should work with any DiscJockey disc, even if it's years out of date. New features must preserve old behaviour for older discs.
+
 ## Non Goals
 
 ### Compatibility with retro linux distros
-We don't aim for compatibility with very old, unmaintained linux distros. While we won't deliberately break compatibility with them just for the sake of it, if there are clear benefits to making a breaking change, and this change will only affect very old distro's we will make it. As a rough guideline we aim to work on distros released in the last decade.
+We don't aim for compatibility with very old, unmaintained linux distros. While we won't deliberately break compatibility with them just for the sake of it, if there are clear benefits to making a breaking change we will make it. As a rough guideline we aim to work on distros released in the last decade.
+
+### Compatibility with every distro
+We don't aim to work with everything under the sun. For instance, DiscJockey has systemD as a hard dependency. 
 
 ### Being a launcher
 DiscJockey launches games. It is not a launcher in the common sense, ie a gui program with lists of games, custom containers, wine runners and so on. There will never be a GUI*. There will never be online updates.
@@ -133,18 +146,25 @@ DiscJockey launches games. It is not a launcher in the common sense, ie a gui pr
 Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly like the experience of inserting a disc into a disc drive and hearing said drive slowly humm to life before a small grey box appears on your screen. 
 
 
+## Roadmap
 
-How to create a bootable .iso
+### 0.2
 
-1. Copy the folder named after the type of install you want to a new location e.g SingleDiscInstaller to MDKInstaller. This will become your .iso
-2. Copy the gog offline installer files to this new folder
-3. Open config.text in a text editor. This is the equivalent to autorun.inf in windows. The autorun script reads these values to perform the install. Set the MANDATORY variables to appropriate values.
-4. If your game has fixes authored by valve or the umu team, set the OPTIONAL variables as well. This tells umu to apply the fixes. You can also choose a custom proton version here if you want. 
-5. Create an .iso from the folder using the makeISO script. You may need to install makeisofs. Feel free to use another option, all that matters is that the contents of MDKInstaller(or whatever) are turned into an .iso  
-6. Mount the .iso and test it. The autorun script should launch it as though it's a real disk. Check that 
-	- the installer autostarts
-	- the install finishes successfully
-	- the game starts from the autostart script 
-	- the game starts upon disk insertion(remount the .iso). 
-7. Once you have a working .iso, burn it to a disk!
-8. Optionally, create a fancy case and print a custom label for the disk(Who am I kidding? If you think that this whole thing is a good idea it's not optional for you). 
+- Rewrite shell scripts in python with calls out to shell where necessary
+- Remove bash 4.3 as a dependency. Aim for DiscJockey to run in all major shells(bash, dash, fish, zsh)
+- Multi disc installer support for installers that don't support true multidisc support via archades gog workaround 
+- Multi disc support for true multidisc installers  
+
+### 0.3
+- Installation of Umu-launcher from disc
+- Per game wine dependency management through protontricks
+- Installation of manuals, artwork, strategy guides etc 
+- Uninstall games through discjockey
+### 0.4
+
+- Optional wrapper GUI for installer(choosing prefix location, better management of multidisc support)
+- Optional wrapper GUI for launching games(uninstall, open manual, strategy guide)
+
+### Longer Term
+Possible support for other init systems
+
