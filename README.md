@@ -28,11 +28,24 @@ DiscJockey brings an authentic autorun experience to linux for GOG offline insta
 
 ## Architecture
 
-DiscJockey consists of a python daemon running under systemD, a launch script that handlesinstalling and running games from disc, a centralised location for launch scripts and gamemanagement, and a config folder. 
+DiscJockey consists of a python daemon running under systemD, a launch script that handles installing and running games from disc, a folder to store launch scripts and a config folder. 
 
-The daemon is a user daemon and starts on login. It watches for discs to be inserted, then calles the launch script if it finds the discjockey config file on disc. The launch script checks if the game is already installed and launches the game from your PC's storage, or the installer from disc, as appropriate. 
+The daemon is a user daemon and starts on login. It watches for discs to be inserted, then calls the launch script if it finds a discjockey config file on disc. The launch script checks if the game is already installed and launches the game from your PC's storage, or the installer from disc, as appropriate. 
 
 Discjockey uses UMU-launcher to run games, as it provides a standard environment that is consistent with other launchers and can be installed as a user application. A new prefix is created for each game. The location of the prefix is set in the on disc config, but can be overridden by the global config. 
+Discjockey maintains a folder with launch scripts for each installed game. When you insert a disc for a game that you've previously installed, discjockey checks for a launch script. If it exists it will run it and launch the game instead of running the installer. 
+
+## System Requirements
+
+The current system requirements are
+
+- SystemD
+- Bash 4.3 or greater
+- UMU-Runner installed via system or user install
+- Python 3
+- An XDG base directory compliant home directory
+
+Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
 
 ## How to Use
 
@@ -152,6 +165,7 @@ Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly 
 ### 0.2
 
 - Rewrite shell scripts in python with calls out to shell where necessary
+- Use XDG base directory env vars instead of assuming the common defaults
 - Remove bash 4.3 as a dependency. Aim for DiscJockey to run in all major shells(bash, dash, fish, zsh)
 - Multi disc installer support for installers that don't support true multidisc support via archades gog workaround 
 - Multi disc support for true multidisc installers  
