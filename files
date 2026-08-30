@@ -1,4 +1,0 @@
-.config/systemd/user/discjockey.service
-.local/bin/autorun.sh
-.local/bin/launch.sh
-.local/bin/discjockeyd.py
