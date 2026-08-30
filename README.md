@@ -16,14 +16,15 @@ DiscJockey - Automatically runs windows installers from removeable media
 
 # DiscJockey
 
-DiscJockey is a project aimed at bringing an authentic autorun experience to linux desktops. Using Umu-Runner, it autoruns game installers when you insert an optical disk. 
+DiscJockey brings an authentic autorun experience to linux for GOG offline installers. Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
 
 ## Key Features
 
-- Install detection
+- Automatically launch installers
+- Automatically run installed games
+- Lives entirely in home
 - Global configuration to overwrite on disc settings
-- Autostart installed games on disc insert for a console like experience
-
+- Each discjockey disc is also(optionally) a discjockey installer for true offline support
 
 ## Architecture
 
@@ -167,4 +168,5 @@ Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly 
 
 ### Longer Term
 Possible support for other init systems
+Support for windows autorun.inf files to allow it to run authentic commercial discs(this will be inherently more limited than actual discjockey disks)
 
