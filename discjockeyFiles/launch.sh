@@ -43,6 +43,7 @@ autostartScript=${configuration["autostartScript"]}
 gameDirectory=${configuration["gameDirectory"]}
 gamePath=${configuration["gamePath"]}
 gameExe=${configuration["gameExe"]}
+gameName=${configuration["gameName"]}
 installerExe=${configuration["installerExe"]}
 
 #DO NOT LIKE Really want to avoid doing this. In future grab $HOME and replace it with the actual home instead of evalling arbitrary user input. Priority for 0.2
@@ -128,6 +129,12 @@ else
 	chmod +x $autostartFullPath
 	echo "cd \"${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}\"" >> "${autostartFullPath}"
 	echo "WINEPREFIX='$prefixDirectoryFullPath' GAMEID=$gameID STOREID=$store umu-run '${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe}' > /dev/null 2>&1" >> "${autostartFullPath}" 
+
+	#Create desktop icons if requested by user
+	if [[ $installerCreatesDesktopIcons -eq "True" ]]; then 
+		printf "Creating desktop icon"
+		python "{$HOME}/.local/share/bin/discjockey/addDesktopIcons.py" "$gameDirectory" "$autostartFullPath"
+
 	printf "Installation finished successfully. Eject and reinsert the disc to launch the game.\n"
 fi
 #TODO
