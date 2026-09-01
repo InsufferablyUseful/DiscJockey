@@ -35,7 +35,7 @@ while read -r line; do
   key="$(echo "$line" | awk -F'=' '{print $1}')"
   value=$(echo "$line" | awk -F'=' '{print $2}')
   configuration["$key"]="$value"
-done < "config.txt"
+done < "discjockey"
 #Fill out the config values into named variables for access
 #TODO impractical in the long run. Break the whole thing up into functions/new scripts which setup just the vars they need
 iconName=${configuration["iconName"]}
@@ -51,9 +51,6 @@ installerExe=${configuration["installerExe"]}
 #DO NOT LIKE Really want to avoid doing this. In future grab $HOME and replace it with the actual home instead of evalling arbitrary user input. Priority for 0.2
 autostartPath=$(eval "echo $autostartPath")
 gamePath=$(eval "echo $gamePath")
-echo $autostartPath
-echo $gamePath
-exit 0
 
 gameID=${configuration["gameID"]}
 store=${configuration["store"]}
@@ -63,7 +60,7 @@ proton=${configuration["proton"]}
 #TODO This should be a function that I call twice, but passing arrays into functions is hard. Figure something out.
 
 declare -A globalconfiguration
-if [[ -f "${HOME}/.config/discjockey/config"]]; then 
+if [[ -f "${HOME}/.config/discjockey/config" ]]; then 
 	while read -r line; do
   	if [[ $line == \#* ]]; then 
     	continue 
@@ -106,7 +103,12 @@ else
 		printf "$parentdir doesn't exist. Exiting...\n"
 		exit 1
 	fi
-	
+
+	if [[ ! -f "$installerExe" ]]; then
+		printf "Installer $installerExe doesn't exist. Check your configuration file. Exiting..."
+		exit 1
+    fi
+
 	printf "You're installing to: $prefixDirectoryFullPath \n"
 	printf "==========WARNING==========\n"
 	printf "DO NOT change the default install location in the installer. This is not supported. \n" 
@@ -135,7 +137,8 @@ else
 	#Create desktop icons if requested by user
 	if [[ $installerCreatesDesktopIcons -eq "True" ]]; then 
 		printf "Creating desktop icon"
-		python "{$HOME}/.local/share/bin/discjockey/addDesktopIcons.py" "$iconName" "$autostartFullPath"
+		python addDesktopIcons.py "$iconName" "$autostartFullPath"
+	fi
 
 	printf "Installation finished successfully. Eject and reinsert the disc to launch the game.\n"
 fi
