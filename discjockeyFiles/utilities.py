@@ -5,6 +5,9 @@ expected_files = [
 '.config/discjockey/version',
 '.local/bin/discjockey/launch.sh',
 '.local/bin/discjockey/autorun.sh',
+'.local/bin/discjockey/addDesktopIcons.py',
+'.local/bin/discjockey/uninstallDiscjockey.py',
+'.local/bin/discjockey/utilities.py',
 '.local/bin/discjockey/discjockeyd.py',
 '.config/systemd/user/discjockey.service' ]
 expected_directories = [

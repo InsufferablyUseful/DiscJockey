@@ -23,7 +23,9 @@ import shutil
 import sys
 from time import localtime, strftime
 
-from discjockeyFiles/utilities import *
+sys.path.append("discjockeyFiles")
+
+from utilities import *
 
 with open('discjockeyFiles/version', 'r') as version_file:
         ondisc_version = version_file.readline()
@@ -56,7 +58,7 @@ def Install_DiscJockey():
         #create directories
         print('Creating directories')
         for destination in expected_directories:
-                directory = os.path.join(home_directory, os.path.dirname(destination))
+                directory = os.path.join(home_directory, destination)
                 print(directory)
                 os.makedirs(directory, exist_ok = True)
 
@@ -72,11 +74,11 @@ def Install_DiscJockey():
                         else:
                                 print('Backup config file name already taken. Could not create backup config')
                                 sys.exit(1)
-                        shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","globalconfig"))
+                        shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","config"))
                 if keep_config == 'N' or keep_config == 'n': 
                         print('Keeping existing config file. You should review the example config at discjockeyFiles/globalconfig for any new options you may want to change.')
         else:
-                shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","globalconfig"))
+                shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","config"))
         #create files
         print('Creating files')
         for destination in expected_files:
