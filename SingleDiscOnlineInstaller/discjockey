@@ -1,12 +1,16 @@
 #===================Mandatory Parameters===========================
+#Name that will appear on desktop icons and menu entries
+iconName=MDK
 #Directory for storing launch scripts. For ease of organisation it should be the same for all your games. Can be overridden be global config. You can use environment variables like $HOME in this value 
 autostartPath=$HOME/.physicalMedia
+#Full path to the parent directory of the proton prefix. prefixDirectory will be inside this. Can be overridden by global config. You can use environment variables like $HOME in this value
+gamePath=$HOME/Games/umu
 #Name of the launch script. Must be unique per game
 autostartScript=mdk.sh
-#Full path to the game directory inside the proton prefix. Directory the executable is in
-gameDirectory=MDK
-#Full path to the parent directory of the proton prefix. gameDirectory will be inside this. Can be overridden by global config. You can use environment variables like $HOME in this value 
-gamePath=$HOME/Games/umu
+#name of the proton prefix containing the game. 
+prefixDirectory=MDK
+#Full path to the game directory inside the proton prefix. Directory the executable is in. 
+gameDirectory=drive_c/GOG Games/MDK
 #The game executable. Will be executed each time you insert the disk after the game is installed
 gameExe=MDK3DFX.EXE
 #The name of the installer you are going to run 

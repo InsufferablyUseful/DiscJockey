@@ -25,7 +25,7 @@ def UninstallDiscJockey():
                 except Exception as e:
                     print('An error ocurred trying to delete', directory)
                     print(e)
-
+        print('Uninstall complete!')
 
 confirm_uninstall = Get_Input('Are you sure you want to uninstall discjockey, including your config files and any automatic backups? Proceeding is irreversible. Y/N: ', valid_inputs_Yes_No)
 if confirm_uninstall == 'Y' or confirm_uninstall == 'y':

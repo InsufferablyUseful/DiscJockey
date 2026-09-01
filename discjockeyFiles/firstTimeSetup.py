@@ -55,7 +55,7 @@ def Install_DiscJockey():
         #backup config file
         #create directories
         print('Creating directories')
-        for destination in expected_files:
+        for destination in expected_directories:
                 directory = os.path.join(home_directory, os.path.dirname(destination))
                 print(directory)
                 os.makedirs(directory, exist_ok = True)
@@ -63,17 +63,20 @@ def Install_DiscJockey():
         print('Creating config file')
         config_path = os.path.join(home_directory,'.config/discjockey/config')
         if os.path.isfile(config_path):
-                keep_config = Get_Input('New config file found. Do you want to replace the existing config file? This will wipe any changes to the defaults. In most cases it\'s easier to copy new values from the example config in discjockeyFiles/config. Y/N: ', valid_inputs_Yes_No)
-                if keep_config == 'Y' or keep_config == 'n':
-                        print('Keeping existing config file. You should review the example config at discjockeyFiles/config for any new options you may want to change.')
-                if keep_config == 'N' or keep_config == 'n': 
+                keep_config = Get_Input('Existing config file found. Do you want to replace it? This will wipe any changes to the defaults. In most cases it\'s easier to copy new values from the example config in discjockeyFiles/config. Y/N: ', valid_inputs_Yes_No)
+                if keep_config == 'Y' or keep_config == 'y':
                         print('Replacing config file. The old config file will be preserved in the config directory. You will need to update the default settings.')
                         time = strftime('%H_%M_%S',localtime())
                         if not os.path.isfile(config_path + '_backup_' + time):
-                                shutil.copyfile(config_path,config_path + '_backup_' + time)
+                                shutil.move(config_path,config_path + '_backup_' + time)
                         else:
                                 print('Backup config file name already taken. Could not create backup config')
                                 sys.exit(1)
+                        shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","globalconfig"))
+                if keep_config == 'N' or keep_config == 'n': 
+                        print('Keeping existing config file. You should review the example config at discjockeyFiles/globalconfig for any new options you may want to change.')
+        else:
+                shutil.copyfile(os.path.join('discjockeyFiles',"globalconfig"),os.path.join(home_directory,".config","discjockey","globalconfig"))
         #create files
         print('Creating files')
         for destination in expected_files:
