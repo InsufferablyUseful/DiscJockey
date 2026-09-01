@@ -11,6 +11,9 @@ stringbuilder = []
 
 desktop_entry_name = sys.argv[1]
 launch_script = sys.argv[2] 
+
+have_icon = False
+
 desktop_icon=""
 #Unfortunately even supposedly XDG compliant distros often don't set the XDG env vars correctly, so we have to do this bull****. 
 #Thanks linux for teaching everyone the value of defensive programming
@@ -32,6 +35,7 @@ if os.path.isfile("../icon.png") and create_icon:
         try:
                 shutil.copyfile(join("..","icon.png"),desktop_icon)
                 desktop_icon = f"{desktop_entry_name}.png"
+                have_icon=True
         except Exception as e:
                 print("An error ocurred trying to copy the icon png to",desktop_icon)
 else:
@@ -39,6 +43,9 @@ else:
 
 #How did creating an icon pic take so much space? Maybe I just need to git gud at python...
 
+if desktop_entry_name == '' and desktop_icon == '':
+        print("No icon and no icon name provided. Cannot create icon. Exiting...")
+        sys.exit()
 
 stringbuilder.append("[Desktop Entry]\nEncoding=UTF-8")
 stringbuilder.append(f"Name={desktop_entry_name}")

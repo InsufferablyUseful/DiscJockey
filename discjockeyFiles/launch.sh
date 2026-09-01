@@ -19,7 +19,7 @@ discDirectory="$1"
 cd "$discDirectory"
 
 #Check we're dealing with a discjockey disc
-if [[ ! -f "config.txt" ]]; then
+if [[ ! -f "discjockey" ]]; then
 	echo "Not a discjockey disk. exiting..."
 	exit 0
 fi
@@ -38,12 +38,14 @@ while read -r line; do
 done < "config.txt"
 #Fill out the config values into named variables for access
 #TODO impractical in the long run. Break the whole thing up into functions/new scripts which setup just the vars they need
+iconName=${configuration["iconName"]}
 autostartPath=${configuration["autostartPath"]}
-autostartScript=${configuration["autostartScript"]}
-gameDirectory=${configuration["gameDirectory"]}
 gamePath=${configuration["gamePath"]}
+autostartScript=${configuration["autostartScript"]}
+prefixDirectory=${configuration["prefixDirectory"]}
+gameDirectory=${configuration["gameDirectory"]}
 gameExe=${configuration["gameExe"]}
-gameName=${configuration["gameName"]}
+
 installerExe=${configuration["installerExe"]}
 
 #DO NOT LIKE Really want to avoid doing this. In future grab $HOME and replace it with the actual home instead of evalling arbitrary user input. Priority for 0.2
@@ -98,7 +100,7 @@ if [[ -e "$autostartFullPath" ]]; then
 
 else
 	#Run the installer
-	prefixDirectoryFullPath=${gamePath}/${gameDirectory}
+	prefixDirectoryFullPath=${gamePath}/${prefixDirectory}
  	#Check the path to the install folder exists
 	if [[ ! -d "$(dirname "$prefixDirectoryFullPath")" ]]; then
 		printf "$parentdir doesn't exist. Exiting...\n"
@@ -115,7 +117,7 @@ else
 	mkdir -p $prefixDirectoryFullPath
 	WINEPREFIX=$prefixDirectoryFullPath GAMEID=$gameID STOREID=$store umu-run "${installerExe}" > /dev/null 2>&1
 	#Check if the install succeeded
-	if [[ ! -f "${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe}" ]]; then
+	if [[ ! -f "${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}" ]]; then
 		printf "Could not find the game executable at ${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe} \n"
 		printf "It looks like the installation failed. \n"
 		printf "Please double check that all parameters are correct. If they are, please file a bug report to help improve discjockey for everyone.\n";
@@ -127,14 +129,13 @@ else
 	mkdir -p $autostartPath	
 	touch $autostartFullPath
 	chmod +x $autostartFullPath
-	echo "cd \"${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}\"" >> "${autostartFullPath}"
-	echo "WINEPREFIX='$prefixDirectoryFullPath' GAMEID=$gameID STOREID=$store umu-run '${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe}' > /dev/null 2>&1" >> "${autostartFullPath}" 
+	echo "cd \"${prefixDirectoryFullPath}/${gameDirectory}\"" >> "${autostartFullPath}"
+	echo "WINEPREFIX='$prefixDirectoryFullPath' GAMEID=$gameID STOREID=$store umu-run '${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}' > /dev/null 2>&1" >> "${autostartFullPath}" 
 
 	#Create desktop icons if requested by user
 	if [[ $installerCreatesDesktopIcons -eq "True" ]]; then 
 		printf "Creating desktop icon"
-		python "{$HOME}/.local/share/bin/discjockey/addDesktopIcons.py" "$gameDirectory" "$autostartFullPath"
+		python "{$HOME}/.local/share/bin/discjockey/addDesktopIcons.py" "$iconName" "$autostartFullPath"
 
 	printf "Installation finished successfully. Eject and reinsert the disc to launch the game.\n"
 fi
-#TODO
