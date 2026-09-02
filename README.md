@@ -162,15 +162,16 @@ Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly 
 
 - Rewrite shell scripts in python with calls out to shell where necessary
 - Use XDG base directory env vars instead of assuming the common defaults
-- Remove bash 4.3 as a dependency. Aim for DiscJockey to run in all major shells(bash, dash, fish, zsh)
+- Remove bash 4.3 as a dependency. 
 - Multi disc installer support for installers that don't support true multidisc support via archades gog workaround 
-- Multi disc support for true multidisc installers  
+- Uninstall games
 
 ### 0.3
 - Installation of Umu-launcher from disc
 - Per game wine dependency management through protontricks
 - Installation of manuals, artwork, strategy guides etc 
 - Uninstall games through discjockey
+
 ### 0.4
 
 - Optional wrapper GUI for installer(choosing prefix location, better management of multidisc support)
