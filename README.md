@@ -16,7 +16,7 @@ DiscJockey - Automatically runs windows installers from removeable media
 
 # DiscJockey
 
-DiscJockey brings an authentic autorun experience to linux for GOG offline installers. Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
+An authentic autorun experience to linux for GOG offline installers(and others!). Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
 
 ## Key Features
 
@@ -46,6 +46,13 @@ The current system requirements are
 - An XDG base directory compliant home directory
 
  Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
+
+## Contents
+
+[How to Use](#How to Use)
+[Project Goals](#Project Goals)
+[Non Goals](#Non Goals)
+[Roadmap](#Roadmap)
 
 ## How to Use
 
