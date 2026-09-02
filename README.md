@@ -48,11 +48,11 @@ The current system requirements are
  Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
 
 ## Contents
-
-[How to Use](#how-to-use)
-[Project Goals](#project-goals)
-[Non Goals](#non-goals)
-[Roadmap](#Roadmap)
+*Contents
+* [How to Use](#how-to-use)
+* [Project Goals](#project-goals)
+* [Non Goals](#non-goals)
+* [Roadmap](#Roadmap)
 
 ## How to Use
 
