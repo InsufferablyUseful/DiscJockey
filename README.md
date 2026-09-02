@@ -45,8 +45,8 @@ The current system requirements are
 - Python 3
 - An XDG base directory compliant home directory
 
-[!NOTE]
-==Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.==
+> [!NOTE]
+> Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
 
 ## How to Use
 
