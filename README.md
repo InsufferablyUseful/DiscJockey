@@ -60,14 +60,14 @@ cd DiscJockey`
 
 1. Navigate to your copy of the discjockey repo or latest discjockey release
 `cd DiscJockey`
-2. Run `python firstTimeSetup.py`
+2. Run `python3 firstTimeSetup.py`
 3. Discjockey will install automatically.
 4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
 
 #### From a DiscJockey disc
 
 1. Insert the disc into your disc drive. Open a terminal and navigate to the mount location of the disc.
-2. Run `python firstTimeSetup.py`
+2. Run `python3 firstTimeSetup.py`
 3. Discjockey will install automatically.
 4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
 
@@ -121,6 +121,15 @@ The second argument is the label to assign to the .iso
 3. Burn the iso to a disk with whatever tool you want. Brasero is a solid choice.
 
 Congratulations! You have a working DiscJockey disc.  
+
+### Uninstall DiscJockey
+
+1. Navigate to .local/bin/discjockey and run python3 uninstallDiscjockey.py
+
+`cd ~/.local/bin/discjockey/uninstallDiscjockey.py &&
+python3 uninstallDiscjockey.py`
+
+2. Follow the prompts to confirm uninstallation
 
 ## Project Goals
 
