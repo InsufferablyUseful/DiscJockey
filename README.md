@@ -90,8 +90,7 @@ First, make sure that DiscJockey is installed.
 
 `cp ~/Pictures/MDK.png MDK/icon.png`
 
-Note! 
-.ICO files from windows will NOT work. Convert them to png with an image editor first.  
+>Note! .ICO files from windows will NOT work. Convert them to png with an image editor first.  
 
 #### Configure DiscJockey 
 
@@ -105,7 +104,7 @@ Note!
 
 If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
 
-Note! If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
+>Note! If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
 
 
 #### Create a physical disk
