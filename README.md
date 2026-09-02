@@ -18,6 +18,19 @@ DiscJockey - Automatically runs windows installers from removeable media
 
 An authentic autorun experience to linux for GOG offline installers(and others!). Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
 
+## Contents
+- [Introduction](#discjockey)
+  - [Key Features](#key-features)
+  - [Architecture](#architecture)
+  - [System Requirements](#system-requirements)
+- [How to Use](#how-to-use)
+  - [Install DiscJockey](#install-discjockey)
+  - [Create a DiscJockey Disc](#create-a-discjockey-disc)
+  - [Uninstall DiscJockey](#uninstall-discjockey)
+- [Project Goals](#project-goals)
+- [Non Goals](#non-goals)
+- [Roadmap](#Roadmap)
+
 ## Key Features
 
 - Automatically launch installers
@@ -40,25 +53,10 @@ Discjockey maintains a folder with launch scripts for each installed game. When 
 The current system requirements are
 
 - SystemD
-- Bash 4.3 or greater
-- UMU-Runner installed via system or user install
+- Bash 4.3 or greater(Future versions will remove bash as a dependency)
+- UMU-Runner installed via system or user install(Future versions will include the option to create a local UMU-runner installation)
 - Python 3
-- An XDG base directory compliant home directory
-
- Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
-
-## Contents
-- [Introduction](#discjockey)
-  - [Key Features](#key-features)
-  - [Architecture](#architecture)
-  - [System Requirements](#system-requirements)
-- [How to Use](#how-to-use)
-  - [Install DiscJockey](#install-discjockey)
-  - [Create a DiscJockey Disc](#create-a-discjockey-disc)
-  - [Uninstall DiscJockey](#uninstall-discjockey)
-- [Project Goals](#project-goals)
-- [Non Goals](#non-goals)
-- [Roadmap](#Roadmap)
+- An XDG base directory compliant home directory(Currently assumes default locations, future updates will use XDG env vars if available)
 
 ## How to Use
 
