@@ -3,9 +3,11 @@ import os
 home_directory = os.path.expanduser("~")
 expected_files = [
 '.config/discjockey/version',
-'.config/discjockey/config',
 '.local/bin/discjockey/launch.sh',
 '.local/bin/discjockey/autorun.sh',
+'.local/bin/discjockey/addDesktopIcons.py',
+'.local/bin/discjockey/uninstallDiscjockey.py',
+'.local/bin/discjockey/utilities.py',
 '.local/bin/discjockey/discjockeyd.py',
 '.config/systemd/user/discjockey.service' ]
 expected_directories = [
