@@ -95,7 +95,7 @@ Note!
 
 #### Configure DiscJockey 
 
-1. Enter your working directory. Open discjockey with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The default values are a fully working configuration for the gog release of MDK. Use these as a guide and adapt them as needed.  
+1. Enter your working directory. Open discjockey with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The default values are a working configuration for the gog release of [MDK](https://www.gog.com/en/game/mdk). Use these as a guide and adapt them as needed.  
 
 `cd MDK/ && nano discjockey`
 
@@ -127,7 +127,6 @@ Congratulations! You have a working DiscJockey disc.
 DiscJockey aims to abstract away the complexity of installing and launching games from disc on linux. Each DiscJockey disk should contain everything needed to install and run the game on it, without internet access or third party tools like wine, lutris etc. We love those projects, but they get in the way of the authentic physical media experience.
 
 ### Self deploying
-
 DiscJockey discs should be able to fully install DiscJockey on all popular linux distros with a single script. A guiding goal of the project is that you can gift a disc to a friend who doesn't have DiscJockey and, after running the setup script once, they will have a working installation which will work with all future DiscJockey discs they use.
 
 ### Widely compatible
@@ -142,10 +141,10 @@ Once a disc is burned, you want to keep it forever. Disjockey should work with a
 ## Non Goals
 
 ### Compatibility with retro linux distros
-We don't aim for compatibility with very old, unmaintained linux distros. While we won't deliberately break compatibility with them just for the sake of it, if there are clear benefits to making a breaking change we will make it. As a rough guideline we aim to work on distros released in the last decade.
+DiscJockey doesn't aim for compatibility with very old, unmaintained linux distros. While we won't deliberately break compatibility with them just for the sake of it, if there are clear benefits to making a breaking change we will make it. As a rough guideline we aim to work on distros released in the last decade.
 
 ### Compatibility with every distro
-We don't aim to work with everything under the sun. For instance, DiscJockey has systemD as a hard dependency. 
+DiscJockey doesn't aim to work with every distro under the sun, especially ones which deliberately don't comply with standards like XDG, or use less used software like SysVInit. This isn't a knock against those distros, or that software, I just have limited time and experience developing software for a larger audience than myself, and distro's which cover the majority of users will be the priority. Hopefully the project is simple enough that anyone who wants to can adapt it to work with their software stack.   
 
 ### Being a launcher
 DiscJockey launches games. It is not a launcher in the common sense, ie a gui program with lists of games, custom containers, wine runners and so on. There will never be a GUI*. There will never be online updates.
@@ -153,13 +152,12 @@ DiscJockey launches games. It is not a launcher in the common sense, ie a gui pr
 \*We may consider functional gui widgets to wrap functionality that doesn't work in windows installers running under wine, e.g choosing a wine prefix location, choosing to create desktop icons. But that's it.
 
 ### Looking pretty 
-Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly like the experience of inserting a disc into a disc drive and hearing said drive slowly humm to life before a small grey box appears on your screen. 
+Sleek? Modern? Beautiful? All things DiscJockey doesn't want to be. DiscJockey want to be exactly like the experience of inserting a disc into a disc drive and hearing said drive slowly humm to life before a small grey box appears on your screen. 
 
 
 ## Roadmap
 
 ### 0.2
-
 - Rewrite shell scripts in python with calls out to shell where necessary
 - Use XDG base directory env vars instead of assuming the common defaults
 - Remove bash 4.3 as a dependency. 
@@ -173,7 +171,6 @@ Sleek? Modern? Beautiful? All things we don't want to be. We want to be exactly 
 - Uninstall games through discjockey
 
 ### 0.4
-
 - Optional wrapper GUI for installer(choosing prefix location, better management of multidisc support)
 - Optional wrapper GUI for launching games(uninstall, open manual, strategy guide)
 
