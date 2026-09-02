@@ -49,10 +49,13 @@ The current system requirements are
 
 ## Contents
 *Contents
-* [How to Use](#how-to-use)
-* [Project Goals](#project-goals)
-* [Non Goals](#non-goals)
-* [Roadmap](#Roadmap)
+- [How to Use](#how-to-use)
+  - [Install DiscJockey](#install-discjockey)
+  - [Create a DiscJockey Disc](#create-a-discjockey-disc)
+  - [Uninstall DiscJockey](#uninstall-discjockey)
+- [Project Goals](#project-goals)
+- [Non Goals](#non-goals)
+- [Roadmap](#Roadmap)
 
 ## How to Use
 
