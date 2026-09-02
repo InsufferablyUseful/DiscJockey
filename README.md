@@ -48,6 +48,10 @@ The current system requirements are
  Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
 
 ## Contents
+- [Introduction](#discjockey)
+  - [Key Features](#key-features)
+  - [Architecture](#architecture)
+  - [System Requirements](#system-requirements)
 - [How to Use](#how-to-use)
   - [Install DiscJockey](#install-discjockey)
   - [Create a DiscJockey Disc](#create-a-discjockey-disc)
