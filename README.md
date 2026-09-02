@@ -49,9 +49,9 @@ The current system requirements are
 
 ## Contents
 
-[How to Use](#How to Use)
-[Project Goals](#Project Goals)
-[Non Goals](#Non Goals)
+[How to Use](#how-to-use)
+[Project Goals](#project-goals)
+[Non Goals](#non-goals)
 [Roadmap](#Roadmap)
 
 ## How to Use
