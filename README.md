@@ -95,7 +95,7 @@ Note!
 
 #### Configure DiscJockey 
 
-1. Enter your working directory. Open discjockey with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The default values are a working configuration for the gog release of [MDK](https://www.gog.com/en/game/mdk). Use these as a guide and adapt them as needed.  
+1. Enter your working directory. Open discjockey with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The default values are a working configuration for the gog release of [MDK](https://www.gog.com/en/game/mdk) . Use these as a guide and adapt them as needed.  
 
 `cd MDK/ && nano discjockey`
 
