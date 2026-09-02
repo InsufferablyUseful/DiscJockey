@@ -49,81 +49,77 @@ Future versions will remove bash 4.3 as a dependency and include the option to c
 
 ## How to Use
 
+Clone this repo or download the latest release
+
+`git clone https://github.com/InsufferablyUseful/DiscJockey.git &&
+cd DiscJockey`
+
+### Install DiscJockey
+
+#### From your computer
+
+1. Navigate to your copy of the discjockey repo or latest discjockey release
+`cd DiscJockey`
+2. Run `python firstTimeSetup.py`
+3. Discjockey will install automatically.
+4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
+
+#### From a DiscJockey disc
+
+1. Insert the disc into your disc drive. Open a terminal and navigate to the mount location of the disc.
+2. Run `python firstTimeSetup.py`
+3. Discjockey will install automatically.
+4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
+
+
 ### Create a DiscJockey disc
 
-1. Clone this repo or download the latest release
-
-`git clone https://github.com/InsufferablyUseful/DiscJockey.git`
+First, make sure that DiscJockey is installed.
 
 #### Prepare the working directory
-1. Copy the folder SingleDiscInstaller to a location of your choice. This copy is the working directory which will become your ISO. Naming it after the program you're going to burn is a good idea. For this example I'll use MDK  
 
-`cp -r SingleDiscInstaller MDK `
+1. Run createInstallerSkeleton.sh "Path/To/WorkingDirectory". This will copy the required files into a working directory.
 
-2. For a self contained DiscJockey installation, copy DiscJockeyFiles, firstTimeSetup.py, utilities.py and uninstallDiscjockey.py to your copy of the working directory. This is optional, but your disc will not be able to install/uninstall DiscJockey unless you do this.
+`./createInstallerSkeleton.sh MDK`
 
-`cp DiscJockeyFiles firstTimeSetup.py utilities.py uninstallDiscjockey.py MDK/`
-
-3. Copy your installer and any data files into your working directory.
+3. Copy your installer files into the working directory.
 
 `cp ~/Downloads/setupMDK.exe MDK.bin MDK/`
 
-3. Optionally, copy an icon image to the working directory. This will be used for desktop /launcher icons. For GOG games the best way to get icons is to install the game and grab them from the game directory, unfortunately. For physical disks the icons are usually in the root directory on the disk. 
+3. Optionally copy a .png into the folder for use as a desktop icon. It must be called icon.png. 
 
-`cp ~/Pictures/MDK.png MDK/`
+`cp ~/Pictures/MDK.png MDK/icon.png`
 
 Note! 
-The XDG specification requires a .png image. .ICO files from windows will NOT work. Convert them to png with an image editor first.  
+.ICO files from windows will NOT work. Convert them to png with an image editor first.  
 
 #### Configure DiscJockey 
 
-1. Enter your working directory. Open the discjockey file inside SingleDiscInstaller with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The file contains example values and comments to guide you. 
+1. Enter your working directory. Open discjockey with your favourite text editor. Fill out the configuration options as desired. You must set all the mandatory options. The default values are a fully working configuration for the gog release of MDK. Use these as a guide and adapt them as needed.  
 
 `cd MDK/ && nano discjockey`
 
-2. Test the config file by running launch.sh(located in DiscJockeyFiles in your Installation folder) and passing your working directory as an argument 
+2. Test the config file by running ~/.local/bin/discjockey/launch.sh and passing your working directory as an argument 
 
-`./DiscJockeyFiles/launch.sh ../MDK`
+`./~/.local/bin/discjockey/launch.sh ~/DiscJockey/MDK`
 
 If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
 
-Note! If you have a global config file at ~/.config/discjockey/config and autostartInstalledPrograms is set to False then installed games will not autostart
+Note! If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
 
 
 #### Create a physical disk
-1. Make a .iso file from your working directory. Discjockey includes makeiso.sh, a one line wrapper around mkisofs that sets flags for maximum compatibility. mkisofs isn't installed by default on every distro, so you might have to install it, or find an alternative. 
-
-Searching for mkisofs "distro name" is usually informative...
+1. Make a .iso file from your working directory. Discjockey includes makeiso.sh, a one line wrapper around mkisofs that sets flags for maximum compatibility. Depending on your distro you may have to install mkisofs. In general any iso creation tool should work. 
 
 `makeiso.sh MDK/ MDK`
 
 The second argument is the label to assign to the .iso
-
-You can also use GUI programs like ...
 
 2. Test the iso. Assuming you have installed the DiscJockey service, mounting the iso should autorun the installer.   
 
 3. Burn the iso to a disk with whatever tool you want. Brasero is a solid choice.
 
 Congratulations! You have a working DiscJockey disc.  
-
-### Installing DiscJockey
-
-#### From a DiscJockey disc
-
-1. Insert the disc into your disc drive. Open a terminal and navigate to the location of ythe disc.
-2. Run python firstTimeSetup.py
-3. Discjockey will install automatically.
-4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
-
-#### From your computer.
-
-1. Navigate to your copy of the discjockey repo or latest discjockey release
-2. Run python firstTimeSetup.py
-3. Discjockey will install automatically.
-4. Check and adjust global configuration settings. The global config file is located at ~/.config/discjockey/config
-
-
 
 ## Project Goals
 
