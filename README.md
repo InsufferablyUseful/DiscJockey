@@ -45,8 +45,7 @@ The current system requirements are
 - Python 3
 - An XDG base directory compliant home directory
 
-> [!NOTE]
-> Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
+ Future versions will remove bash 4.3 as a dependency and include the option to create a local UMU-runner installation.
 
 ## How to Use
 
@@ -91,7 +90,8 @@ First, make sure that DiscJockey is installed.
 
 `cp ~/Pictures/MDK.png MDK/icon.png`
 
->Note! .ICO files from windows will NOT work. Convert them to png with an image editor first.  
+> [!IMPORTANT]
+.ICO files from windows will not work. Convert them to png with an image editor first.  
 
 #### Configure DiscJockey 
 
@@ -105,7 +105,8 @@ First, make sure that DiscJockey is installed.
 
 If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
 
->Note! If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
+> [!NOTE]
+> If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
 
 
 #### Create a physical disk
