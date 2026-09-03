@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 from utilities import *
 
 def UninstallDiscJockey():
@@ -7,25 +8,25 @@ def UninstallDiscJockey():
         print('Stopping daemon')
         subprocess.run('systemctl --user stop discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user disable discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
-       
+
+        print('Deleting directories') 
+        for directory in deletion_directories:
+                directory = os.path.join(home_directory, directory)
+                try:
+                    shutil.rmtree(directory)
+                except Exception as e:
+                    print('An error ocurred trying to delete', directory)
+                    print(e)
+        print('Uninstall complete!')
+
         print('Deleting files')
-        for file in expected_files:
+        for file in deletion_files:
             try:
                 os.remove(os.path.join(home_directory,file))
             except Exception as e:
                 print('An error ocurred trying to delete ', os.path.join(home_directory,file))
                 print(e)
         subprocess.run('systemctl --user daemon-reload', capture_output=True, text=True, shell = True, executable='/bin/bash')
-
-        print('Deleting directories') 
-        for directory in expected_directories:
-                directory = os.path.join(home_directory, directory)
-                try:
-                    os.rmdir(directory)
-                except Exception as e:
-                    print('An error ocurred trying to delete', directory)
-                    print(e)
-        print('Uninstall complete!')
 
 confirm_uninstall = Get_Input('Are you sure you want to uninstall discjockey, including your config files and any automatic backups? Proceeding is irreversible. Y/N: ', valid_inputs_Yes_No)
 if confirm_uninstall == 'Y' or confirm_uninstall == 'y':

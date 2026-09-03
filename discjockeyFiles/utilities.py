@@ -11,8 +11,17 @@ expected_files = [
 '.local/bin/discjockey/discjockeyd.py',
 '.config/systemd/user/discjockey.service' ]
 expected_directories = [
-'.config/discjockey/',
-'.local/bin/discjockey' ]
+'.config/discjockey',
+'.local/bin/discjockey',
+'.config/systemd/user' ]
+
+deletion_directories = [
+'.config/discjockey',
+'.local/bin/discjockey']
+
+deletion_files = [
+'.config/systemd/user/discjockey.service' ]
+
 valid_inputs_Yes_No = ['Y','N','y','n']
 
 def Get_Input(message, valid_inputs):
