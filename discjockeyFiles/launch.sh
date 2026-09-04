@@ -92,7 +92,7 @@ if [[ -e "$autostartFullPath" ]]; then
 	
 	if [[ "$autostartInstalledPrograms" = "true" ]]; then
 		#Run the launch script 
-		$autostartFullPath &
+		"$autostartFullPath" &
 	fi
 
 else
@@ -105,19 +105,19 @@ else
 	fi
 
 	if [[ ! -f "$installerExe" ]]; then
-		printf "Installer $installerExe doesn't exist. Check your configuration file. Exiting..."
+		printf "Installer "$installerExe" doesn't exist. Check your configuration file. Exiting..."
 		exit 1
     fi
 
-	printf "You're installing to: $prefixDirectoryFullPath \n"
+	printf "You're installing to: "$prefixDirectoryFullPath" \n"
 	printf "==========WARNING==========\n"
 	printf "DO NOT change the default install location in the installer. This is not supported. \n" 
 	printf "If you do, autostart will not work, and the install script will think the installation has failed. \n"
 	printf "The script will wait to verify installation success before creating the autorun script. Once the installation is complete, close the installer to finish the installation.\n"
 	printf "==========WARNING==========\n"
 	printf "The installer will now start.\n" 
-	mkdir -p $prefixDirectoryFullPath
-	WINEPREFIX=$prefixDirectoryFullPath GAMEID=$gameID STOREID=$store umu-run "${installerExe}" > /dev/null 2>&1
+	mkdir -p "$prefixDirectoryFullPath"
+	WINEPREFIX="$prefixDirectoryFullPath" GAMEID="$gameID" STOREID="$store" umu-run "${installerExe}" > /dev/null 2>&1
 	#Check if the install succeeded
 	if [[ ! -f "${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}" ]]; then
 		printf "Could not find the game executable at ${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe} \n"
@@ -128,16 +128,16 @@ else
 	fi
 
 	#Create the autostart script
-	mkdir -p $autostartPath	
-	touch $autostartFullPath
-	chmod +x $autostartFullPath
+	mkdir -p "$autostartPath"	
+	touch "$autostartFullPath"
+	chmod +x "$autostartFullPath"
 	echo "cd \"${prefixDirectoryFullPath}/${gameDirectory}\"" >> "${autostartFullPath}"
-	echo "WINEPREFIX='$prefixDirectoryFullPath' GAMEID=$gameID STOREID=$store umu-run '${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}' > /dev/null 2>&1" >> "${autostartFullPath}" 
+	echo "WINEPREFIX=\"$prefixDirectoryFullPath\" GAMEID=\"$gameID\" STOREID=\"$store\" umu-run \"${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}\" > /dev/null 2>&1" >> "${autostartFullPath}" 
 
 	#Create desktop icons if requested by user
-	if [[ $installerCreatesDesktopIcons -eq "True" ]]; then 
-		printf "Creating desktop icon"
-		python addDesktopIcons.py "$iconName" "$autostartFullPath"
+	if [[ "$installerCreatesDesktopIcons" -eq "True" ]]; then 
+		printf "Creating desktop icon\n"
+		python ~/.local/bin/discjockey/addDesktopIcons.py "$iconName" "$autostartFullPath" "$discDirectory/icon.png" 
 	fi
 
 	printf "Installation finished successfully. Eject and reinsert the disc to launch the game.\n"

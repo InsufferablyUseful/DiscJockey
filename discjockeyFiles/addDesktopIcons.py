@@ -11,6 +11,8 @@ stringbuilder = []
 
 desktop_entry_name = sys.argv[1]
 launch_script = sys.argv[2] 
+icon = sys.argv[3]
+
 
 have_icon = False
 
@@ -30,10 +32,10 @@ if not os.path.isdir(join(data_home_directory,"icons")):
         create_icon = False
         print(f"Could not find XDG compliant directory for icons at {join(data_home_directory,"icons")}")
 
-if os.path.isfile("../icon.png") and create_icon:
+if os.path.isfile(icon) and create_icon:
         desktop_icon = join(data_home_directory,"icons",f"{desktop_entry_name}.png")
         try:
-                shutil.copyfile(join("..","icon.png"),desktop_icon)
+                shutil.copyfile(icon,desktop_icon)
                 desktop_icon = f"{desktop_entry_name}.png"
                 have_icon=True
         except Exception as e:
@@ -46,10 +48,10 @@ else:
 if desktop_entry_name == '' and desktop_icon == '':
         print("No icon and no icon name provided. Cannot create icon. Exiting...")
         sys.exit()
-
+print("Generating desktop file")
 stringbuilder.append("[Desktop Entry]\nEncoding=UTF-8")
 stringbuilder.append(f"Name={desktop_entry_name}")
-stringbuilder.append(f"Exec={launch_script}")
+stringbuilder.append(f"Exec=\"{launch_script}\"")
 stringbuilder.append(f"Icon={desktop_icon}")
 stringbuilder.append("Type=Application")
 stringbuilder.append("Categories=Games;")
@@ -57,9 +59,12 @@ stringbuilder.append("Categories=Games;")
 finalString = "\n".join(stringbuilder)
 
 try:
+        print("writing desktop file")
+        print(join(data_home_directory,"applications",f"{desktop_entry_name}.desktop"))
         with open(join(data_home_directory,"applications",f"{desktop_entry_name}.desktop"),'w',encoding="utf-8") as icon:
                 icon.write(finalString)
 except Exception as e:
                     print('An error ocurred trying to create an icon for', desktop_entry_name)
                     print(e)
+print("Finished adding desktop file")
 
