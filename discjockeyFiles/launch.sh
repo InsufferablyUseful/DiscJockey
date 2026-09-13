@@ -39,8 +39,6 @@ done < "discjockey"
 #Fill out the config values into named variables for access
 #TODO impractical in the long run. Break the whole thing up into functions/new scripts which setup just the vars they need
 iconName=${configuration["iconName"]}
-autostartPath=${configuration["autostartPath"]}
-gamePath=${configuration["gamePath"]}
 autostartScript=${configuration["autostartScript"]}
 prefixDirectory=${configuration["prefixDirectory"]}
 gameDirectory=${configuration["gameDirectory"]}
@@ -71,19 +69,11 @@ if [[ -f "${HOME}/.config/discjockey/config" ]]; then
 	done < "${HOME}/.config/discjockey/config"
 fi
 
-globalInstallDirectory=${globalconfiguration["globalInstallDirectory"]}
-globalAutostartDirectory=${globalconfiguration["globalAutostartDirectory"]}
+gamePath=${globalconfiguration["globalInstallDirectory"]}
+autostartPath=${globalconfiguration["globalAutostartDirectory"]}
 autostartInstalledPrograms=${globalconfiguration["autostartInstalledPrograms"]}
 installerCreatesDesktopIcons=${globalconfiguration["installerCreatesDesktopIcons"]}
 installerCreatesMenuEntries=${globalconfiguration["installerCreatesMenuEntries"]}
-
-if [[ ! -z "$globalInstallDirectory" ]]; then
-	gamePath="$globalInstallDirectory"
-fi
-
-if [[ ! -z "$globalAutostartDirectory" ]]; then
-	autostartPath="$globalAutostartDirectory"
-fi
 
 #Check if game is already installed
 autostartFullPath="${autostartPath}/${autostartScript}"
