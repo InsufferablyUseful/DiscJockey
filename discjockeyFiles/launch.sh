@@ -69,11 +69,10 @@ if [[ -f "${HOME}/.config/discjockey/config" ]]; then
 	done < "${HOME}/.config/discjockey/config"
 fi
 
-gamePath=${globalconfiguration["globalInstallDirectory"]}
-autostartPath=${globalconfiguration["globalAutostartDirectory"]}
+gamePath=${globalconfiguration["installDirectory"]}
+autostartPath=${globalconfiguration["autostartDirectory"]}
 autostartInstalledPrograms=${globalconfiguration["autostartInstalledPrograms"]}
 installerCreatesDesktopIcons=${globalconfiguration["installerCreatesDesktopIcons"]}
-installerCreatesMenuEntries=${globalconfiguration["installerCreatesMenuEntries"]}
 
 #Check if game is already installed
 autostartFullPath="${autostartPath}/${autostartScript}"
