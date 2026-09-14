@@ -114,7 +114,7 @@ First, make sure that DiscJockey is installed.
 
 `./~/.local/bin/discjockey/launch.sh ~/DiscJockey/MDK`
 
-If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. 
+If your configuration is correct the installer will start. Complete the installation and run launch again as above. This time the game should start. Check that the game, prefix and launch script are where you expect them to be.
 
 > [!NOTE]
 > If you have set autostartInstalledPrograms to False in .config/discjockey/config then installed games will not autostart
