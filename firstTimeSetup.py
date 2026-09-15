@@ -21,6 +21,8 @@ import operator
 import os
 import shutil
 import sys
+import pathlib
+import stat
 from time import localtime, strftime
 
 sys.path.append("discjockeyFiles")
@@ -86,6 +88,9 @@ def Install_DiscJockey():
         for destination in expected_files:
                 fileName = os.path.basename(destination)
                 shutil.copyfile(os.path.join('discjockeyFiles',fileName),os.path.join(home_directory,destination))
+                print(pathlib.Path(os.path.join('discjockeyFiles',fileName)).suffix)
+                if pathlib.Path(os.path.join('discjockeyFiles',fileName)).suffix == '.sh':
+                       os.chmod(os.path.join(home_directory,destination), 0o744)
         #Setup daemon
         subprocess.run('systemctl --user daemon-reload', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user enable discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')

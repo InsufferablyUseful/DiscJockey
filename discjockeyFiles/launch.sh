@@ -46,9 +46,6 @@ gameExe=${configuration["gameExe"]}
 
 installerExe=${configuration["installerExe"]}
 
-#DO NOT LIKE Really want to avoid doing this. In future grab $HOME and replace it with the actual home instead of evalling arbitrary user input. Priority for 0.2
-autostartPath=$(eval "echo $autostartPath")
-gamePath=$(eval "echo $gamePath")
 
 gameID=${configuration["gameID"]}
 store=${configuration["store"]}
@@ -74,6 +71,10 @@ autostartPath=${globalconfiguration["autostartDirectory"]}
 autostartInstalledPrograms=${globalconfiguration["autostartInstalledPrograms"]}
 installerCreatesDesktopIcons=${globalconfiguration["installerCreatesDesktopIcons"]}
 
+
+#DO NOT LIKE! In future grab $HOME and selectively replace ~ with the actual home instead of blindly evalling arbitrary user input. Priority for 0.2
+autostartPath="$(eval echo $autostartPath)"
+gamePath="$(eval echo $gamePath)"
 #Check if game is already installed
 autostartFullPath="${autostartPath}/${autostartScript}"
 
@@ -86,19 +87,19 @@ if [[ -e "$autostartFullPath" ]]; then
 
 else
 	#Run the installer
-	prefixDirectoryFullPath=${gamePath}/${prefixDirectory}
+	prefixDirectoryFullPath="${gamePath}/${prefixDirectory}"
  	#Check the path to the install folder exists
 	if [[ ! -d "$(dirname "$prefixDirectoryFullPath")" ]]; then
-		printf "$parentdir doesn't exist. Exiting...\n"
+		printf "$(dirname "$prefixDirectoryFullPath") doesn't exist. Exiting...\n"
 		exit 1
 	fi
 
 	if [[ ! -f "$installerExe" ]]; then
-		printf "Installer "$installerExe" doesn't exist. Check your configuration file. Exiting..."
+		printf "Installer $installerExe doesn't exist. Check your configuration file. Exiting..."
 		exit 1
     fi
 
-	printf "You're installing to: "$prefixDirectoryFullPath" \n"
+	printf "You're installing to: $prefixDirectoryFullPath \n"
 	printf "==========WARNING==========\n"
 	printf "DO NOT change the default install location in the installer. This is not supported. \n" 
 	printf "If you do, autostart will not work, and the install script will think the installation has failed. \n"
@@ -109,7 +110,7 @@ else
 	WINEPREFIX="$prefixDirectoryFullPath" GAMEID="$gameID" STOREID="$store" umu-run "${installerExe}" > /dev/null 2>&1
 	#Check if the install succeeded
 	if [[ ! -f "${prefixDirectoryFullPath}/${gameDirectory}/${gameExe}" ]]; then
-		printf "Could not find the game executable at ${prefixDirectoryFullPath}/drive_c/GOG Games/${gameDirectory}/${gameExe} \n"
+		printf "Could not find the game executable at ${prefixDirectoryFullPath}/${gameDirectory}/${gameExe} \n"
 		printf "It looks like the installation failed. \n"
 		printf "Please double check that all parameters are correct. If they are, please file a bug report to help improve discjockey for everyone.\n";
 		printf "Exiting..."
