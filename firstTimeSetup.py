@@ -51,20 +51,17 @@ def CheckForExistingInstall(file_locations, home_directory):
                 print(os.path.join(home_directory,file_location))
                 if not os.path.isfile(os.path.join(home_directory,file_location)): 
                         missing_files.append(file_location)
-        print(len(missing_files))
         return missing_files 
 
 def Install_DiscJockey():
 
-        print('Install started!')
-        #backup config file
         #create directories
         print('Creating directories')
         for destination in expected_directories:
                 directory = os.path.join(home_directory, destination)
                 print(directory)
                 os.makedirs(directory, exist_ok = True)
-
+        #backup config file
         print('Creating config file')
         config_path = os.path.join(home_directory,'.config/discjockey/config')
         if os.path.isfile(config_path):
@@ -88,14 +85,15 @@ def Install_DiscJockey():
         for destination in expected_files:
                 fileName = os.path.basename(destination)
                 shutil.copyfile(os.path.join('discjockeyFiles',fileName),os.path.join(home_directory,destination))
-                print(pathlib.Path(os.path.join('discjockeyFiles',fileName)).suffix)
                 if pathlib.Path(os.path.join('discjockeyFiles',fileName)).suffix == '.sh':
                        os.chmod(os.path.join(home_directory,destination), 0o744)
         #Setup daemon
+        print('Setting up daemon')
         subprocess.run('systemctl --user daemon-reload', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user enable discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
         subprocess.run('systemctl --user start discjockey.service', capture_output=True, text=True, shell = True, executable='/bin/bash')
-
+        print('Installation complete!')
+        print(f'If this is a fresh installation, set your preferences by editing {os.path.join(home_directory,".config","discjockey","config")}')
 
 print('Checking dependencies...')
 dependencies_met = True
@@ -117,13 +115,13 @@ missing_files = CheckForExistingInstall(expected_files, home_directory)
 install_permission = ''
 if len(missing_files) == len(expected_files):
         install_permission = Get_Input('No install of DiscJockey found. Do you want to install Y/N: ', valid_inputs_Yes_No)
-if len(missing_files) > 0 and len(missing_files) < len(expected_files):
+elif len(missing_files) > 0 and len(missing_files) < len(expected_files):
         print('Traces of an existing install were found, but it seems to be incomplete.')
         print('The following files are missing: ')
         for missing_file in missing_files:
                 print(missing_file)
         install_permission = Get_Input('Do you want to reinstall DiscJockey? Y/N: ', valid_inputs_Yes_No)
-if len(missing_files) == 0: 
+elif len(missing_files) == 0: 
         print('Existing DiscJockey installation found. Checking if the version on disc is more recent.')
         with open(os.path.join(home_directory, '.config/discjockey/version'), 'r') as version_file:
                 installed_version = version_file.readline()
@@ -133,8 +131,9 @@ if len(missing_files) == 0:
                   install_permission = Get_Input('This version is older than the installed version. Do you want to downgrade? Y/N: ', valid_inputs_Yes_No)
         elif installed_version == ondisc_version:
                   install_permission = Get_Input('This version is already installed. Do you want to reinstall? Y/N: ', valid_inputs_Yes_No)
+
 if install_permission == 'N' or install_permission == 'n':
         print('Exiting installer')
         sys.exit(0)
-if install_permission == 'Y' or install_permission == 'y':
+elif install_permission == 'Y' or install_permission == 'y':
         Install_DiscJockey()
