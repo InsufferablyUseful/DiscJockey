@@ -198,5 +198,3 @@ Sleek? Modern? Beautiful? All things DiscJockey doesn't want to be. DiscJockey w
 ### Longer Term
 Possible support for other init systems
 Support for windows autorun.inf files to allow it to run authentic commercial discs(this will be inherently more limited than actual discjockey disks)
-
-## Contributing
