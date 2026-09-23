@@ -3,14 +3,25 @@ import os
 home_directory = os.path.expanduser("~")
 expected_files = [
 '.config/discjockey/version',
-'.config/discjockey/config',
 '.local/bin/discjockey/launch.sh',
 '.local/bin/discjockey/autorun.sh',
+'.local/bin/discjockey/addDesktopIcons.py',
+'.local/bin/discjockey/uninstallDiscjockey.py',
+'.local/bin/discjockey/utilities.py',
 '.local/bin/discjockey/discjockeyd.py',
 '.config/systemd/user/discjockey.service' ]
 expected_directories = [
-'.config/discjockey/',
-'.local/bin/discjockey' ]
+'.config/discjockey',
+'.local/bin/discjockey',
+'.config/systemd/user' ]
+
+deletion_directories = [
+'.config/discjockey',
+'.local/bin/discjockey']
+
+deletion_files = [
+'.config/systemd/user/discjockey.service' ]
+
 valid_inputs_Yes_No = ['Y','N','y','n']
 
 def Get_Input(message, valid_inputs):

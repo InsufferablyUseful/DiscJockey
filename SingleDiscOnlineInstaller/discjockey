@@ -1,17 +1,17 @@
 #===================Mandatory Parameters===========================
-#Directory for storing launch scripts. For ease of organisation it should be the same for all your games.
-autostartPath=/home/<user>/.physicalMedia
 #Name of the launch script. Must be unique per game
 autostartScript=mdk.sh
-#Directory the executable is in
-gameDirectory=MDK
-#Full path to the proton prefix. gameDirectory will be inside this. Can be overridden by global config 
-gamePath=/home/<user>/Games/umu
+#name of the proton prefix containing the game. 
+prefixDirectory=MDK
+#Full path to the game directory inside the proton prefix. Directory the executable is in. 
+gameDirectory=drive_c/GOG Games/MDK
 #The game executable. Will be executed each time you insert the disk after the game is installed
 gameExe=MDK3DFX.EXE
 #The name of the installer you are going to run 
 installerExe=setup_mdk_1.0_hotfix_(56405).exe
 #===================Optional Parameters============================
+#Name that will appear on desktop icons and menu entries. If not provided and icon/launchers are enabled the .exe name will be used as a fallback
+iconName=MDK
 #Umu gameID for game specific fixes and workarounds. Not needed if no fixes required. If the game is on steam, use umu-steamID as the gameID. Otherwise see https://github.com/Open-Wine-Components/umu-database
 gameID=umu-default
 #amazon, battlenet, ea, egs, gog, humble, itchio, steam, ubisoft, zoomplatform, umu, none

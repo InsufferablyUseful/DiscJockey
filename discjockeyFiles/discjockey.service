@@ -19,8 +19,9 @@ Description=Monitor for disc insertion events and run the discjockey autorun scr
 After=graphical-session.target
 Requires=graphical-session.target
 [Service]
+WorkingDirectory=%h/.local/bin/discjockey
 Type=simple
-ExecStart=python %h/.local/bin/discjockey/discjockeyd.py
+ExecStart=python3 %h/.local/bin/discjockey/discjockeyd.py
 [Install]
 WantedBy=graphical-session.target
 

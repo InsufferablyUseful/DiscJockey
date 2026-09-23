@@ -24,4 +24,4 @@ for device in iter(monitor.poll, None):
     if device.get('ID_CDROM') and device.get('DISK_MEDIA_CHANGE') and device.get('ID_FS_TYPE'):
         print('CDROM inserted!')
         print(device.get('DEVNAME'))
-        subprocess.run(f'autorun.sh {device.get('DEVNAME')}', shell = True, executable="/bin/bash")
+        subprocess.run(f'./autorun.sh {device.get('DEVNAME')}', shell = True, executable="/bin/bash")

@@ -21,7 +21,8 @@ echo "start"
 #Make sure we're not getting the whole disk
 disk="$1"
 if [ -z $(echo "$disk" | grep '[0-9]') ] ; then
-   exit
+   echo "Whole disc. Exiting..."
+        exit
 fi
 echo "Disk name $disk"
 echo "Disk name $disk" >> /tmp/udev.log
@@ -33,11 +34,10 @@ while ! lsblk -ln "$disk" | grep -q rom; do
 done
 sleep 5
 echo "leaving sleep"
-partition=$(findmnt -rno TARGET  "$disk")
+partition="$(findmnt -no TARGET  "$disk")"
 #partition=$(mount | grep "$disk" | awk '{print $3}')
 echo "$partition"
-cd "$partition"
-"launch.sh" "$partition"
+"./launch.sh" "$partition"
 echo "finish"
 
 
