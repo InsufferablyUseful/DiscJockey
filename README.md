@@ -16,7 +16,7 @@
 
 # DiscJockey
 
-An authentic autorun experience on linux for GOG offline installers(and others!). Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
+An authentic autorun experience to linux for GOG offline installers(and others!). Burn your installer to an optical disc alongside the discjockey file and autorun it like on a retro windows install. Once a game is installed, inserting the disc again will autolaunch the game. 
 
 ## Contents
 - [Introduction](#discjockey)
