@@ -25,7 +25,6 @@ if [ -z $(echo "$disk" | grep '[0-9]') ] ; then
         exit
 fi
 echo "Disk name $disk"
-echo "Disk name $disk" >> /tmp/udev.log
 #Wait until partition appears
 while ! lsblk -ln "$disk" | grep -q rom; do
         echo "sleep"
